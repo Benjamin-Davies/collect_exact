@@ -1,11 +1,15 @@
 use std::{error, fmt};
 
+/// Error that is returned when the iterator does not have exactly the right number of items.
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum Error {
+    /// The iterator has too few items.
     TooFewItems,
+    /// The iterator has too many items.
     TooManyItems,
 }
 
+/// Error that is returned when the iterator has too few items.
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct PrefixError;
 
