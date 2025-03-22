@@ -25,7 +25,7 @@ impl<A, E, V: FromIteratorExact<A>> FromIteratorExact<Result<A, E>> for Result<V
 
     fn from_iter_exact_prefix<I: IntoIterator<Item = Result<A, E>>>(
         iter: I,
-    ) -> Result<Self, crate::Error> {
+    ) -> Result<Self, crate::PrefixError> {
         let mut state = State {
             iter: iter.into_iter(),
             error: None,

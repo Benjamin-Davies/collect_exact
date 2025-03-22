@@ -15,7 +15,7 @@ macro_rules! tuple_impls {
                 <[T; $n]>::from_iter_exact(iter).map(|[ $($name,)* ]| ( $($name,)* ))
             }
 
-            fn from_iter_exact_prefix<I: IntoIterator<Item = T>>(iter: I) -> Result<Self, crate::Error> {
+            fn from_iter_exact_prefix<I: IntoIterator<Item = T>>(iter: I) -> Result<Self, crate::PrefixError> {
                 <[T; $n]>::from_iter_exact_prefix(iter).map(|[ $($name,)* ]| ( $($name,)* ))
             }
         }

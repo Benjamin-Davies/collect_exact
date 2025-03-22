@@ -9,7 +9,7 @@ mod impls;
 mod result;
 mod tuples;
 
-pub use error::Error;
+pub use error::{Error, PrefixError};
 
 pub trait CollectExact {
     type Item;
@@ -18,7 +18,7 @@ pub trait CollectExact {
     where
         Self: Sized;
 
-    fn collect_exact_prefix<B: FromIteratorExact<Self::Item>>(self) -> Result<B, Error>
+    fn collect_exact_prefix<B: FromIteratorExact<Self::Item>>(self) -> Result<B, PrefixError>
     where
         Self: Sized;
 }
@@ -26,7 +26,7 @@ pub trait CollectExact {
 pub trait FromIteratorExact<T>: Sized {
     fn from_iter_exact<I: IntoIterator<Item = T>>(iter: I) -> Result<Self, Error>;
 
-    fn from_iter_exact_prefix<I: IntoIterator<Item = T>>(iter: I) -> Result<Self, Error>;
+    fn from_iter_exact_prefix<I: IntoIterator<Item = T>>(iter: I) -> Result<Self, PrefixError>;
 }
 
 impl<Iter> CollectExact for Iter
@@ -42,7 +42,7 @@ where
         FromIteratorExact::from_iter_exact(self)
     }
 
-    fn collect_exact_prefix<B: FromIteratorExact<Self::Item>>(self) -> Result<B, Error>
+    fn collect_exact_prefix<B: FromIteratorExact<Self::Item>>(self) -> Result<B, PrefixError>
     where
         Self: Sized,
     {
@@ -55,7 +55,7 @@ impl<T, const N: usize> FromIteratorExact<T> for [T; N] {
         impls::collect_exact(iter.into_iter())
     }
 
-    fn from_iter_exact_prefix<I: IntoIterator<Item = T>>(iter: I) -> Result<Self, Error> {
+    fn from_iter_exact_prefix<I: IntoIterator<Item = T>>(iter: I) -> Result<Self, PrefixError> {
         impls::collect_exact_prefix(iter.into_iter())
     }
 }

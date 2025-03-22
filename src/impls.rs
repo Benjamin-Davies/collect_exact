@@ -14,7 +14,7 @@ pub(crate) fn collect_exact<T, const N: usize>(
 
 pub(crate) fn collect_exact_prefix<T, const N: usize>(
     mut iter: impl Iterator<Item = T>,
-) -> Result<[T; N], crate::Error> {
+) -> Result<[T; N], crate::PrefixError> {
     unsafe {
         let mut array = MaybeUninit::<[T; N]>::uninit();
 
@@ -26,7 +26,7 @@ pub(crate) fn collect_exact_prefix<T, const N: usize>(
                 for j in 0..i {
                     start_ptr.add(j).drop_in_place();
                 }
-                return Err(crate::Error::TooFewItems);
+                return Err(crate::PrefixError);
             }
         }
 

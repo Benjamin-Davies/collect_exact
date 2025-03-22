@@ -1,4 +1,4 @@
-use collect_exact::{CollectExact, Error};
+use collect_exact::{CollectExact, Error, PrefixError};
 
 #[test]
 fn test_into_array() {
@@ -67,5 +67,5 @@ fn test_prefix_into_array() {
 fn test_prefix_too_few_items_into_array() {
     let iter = [42; 127].into_iter();
     let result = iter.collect_exact_prefix::<[u8; 128]>();
-    assert_eq!(result, Err(Error::TooFewItems));
+    assert_eq!(result, Err(PrefixError));
 }
