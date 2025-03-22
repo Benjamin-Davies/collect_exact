@@ -1,6 +1,6 @@
 [package]
 name = "collect_exact"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 
 description = "Allows zero-cost collection into exact-size arrays and tuples."
