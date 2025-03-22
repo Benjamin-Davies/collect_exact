@@ -4,11 +4,12 @@
 #![allow(clippy::missing_errors_doc)]
 #![allow(missing_docs)]
 
-mod errors;
+mod error;
 mod impls;
+mod result;
 mod tuples;
 
-pub use errors::Error;
+pub use error::Error;
 
 pub trait CollectExact {
     type Item;
