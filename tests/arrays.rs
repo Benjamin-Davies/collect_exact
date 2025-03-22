@@ -3,21 +3,21 @@ use collect_exact::{CollectExact, Error, PrefixError};
 #[test]
 fn test_into_array() {
     let iter = [42; 256].into_iter();
-    let result = iter.collect_exact::<[u8; 256]>();
+    let result = iter.collect_exact::<[u32; 256]>();
     assert_eq!(result, Ok([42; 256]));
 }
 
 #[test]
 fn test_too_few_items_into_array() {
     let iter = [42; 255].into_iter();
-    let result = iter.collect_exact::<[u8; 256]>();
+    let result = iter.collect_exact::<[u32; 256]>();
     assert_eq!(result, Err(Error::TooFewItems));
 }
 
 #[test]
 fn test_too_many_items_into_array() {
     let iter = [42; 257].into_iter();
-    let result = iter.collect_exact::<[u8; 256]>();
+    let result = iter.collect_exact::<[u32; 256]>();
     assert_eq!(result, Err(Error::TooManyItems));
 }
 
@@ -68,4 +68,14 @@ fn test_prefix_too_few_items_into_array() {
     let iter = [42; 127].into_iter();
     let result = iter.collect_exact_prefix::<[u8; 128]>();
     assert_eq!(result, Err(PrefixError));
+}
+
+#[test]
+fn test_padded_types() {
+    #[derive(Clone, Copy, Debug, PartialEq)]
+    struct Padded(u32, u16);
+
+    let iter = [Padded(42, 1); 128].into_iter();
+    let result = iter.collect_exact::<[Padded; 128]>();
+    assert_eq!(result, Ok([Padded(42, 1); 128]));
 }
